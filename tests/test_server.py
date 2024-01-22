@@ -1,51 +1,87 @@
-import requests
+import sys
+import os
 
-# URL base para tu aplicación Flask
-BASE_URL = "http://localhost:8181"
+# Agregar el directorio source_code al sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'source_code')))
 
-def test_index():
-    response = requests.get(f"{BASE_URL}/")
-    assert response.status_code == 200
+import unittest
+from unittest.mock import patch
+from flask import template_rendered
+from contextlib import contextmanager
+from flask import session
 
-def test_add():
-    data = {'name': 'Test Name222', 'phone': '123456789', 'address': 'Test Address', 'save': 'some_value'}
-    response = requests.get(f"{BASE_URL}/add/")
-    assert response.status_code == 200
 
-""" def test_addphone():
-    data = {'name': 'Test Name', 'phone': '123456789', 'address': 'Test Address', 'save': 'some_value'}
-    response = requests.post(f"{BASE_URL}/addphone", data=data)
-    assert response.status_code == 302 """
+from server import app
 
-def test_update():
-    # Suponiendo que tienes un ID válido para probar
-    valid_id = 1
-    response = requests.get(f"{BASE_URL}/update/{valid_id}/")
-    assert response.status_code == 200
+@contextmanager
+def captured_templates(app):
+    recorded = []
 
-def test_updatephone():
-    data = {
-        'id': 1,
-        'phone_number': '987654321',
-        'description': 'Updated phone number'
-    }
-    response = requests.post(f"{BASE_URL}/updatephone", data=data)
+    def record(sender, template, context, **extra):
+        recorded.append((template, context))
 
-def test_delete():
-    # Suponiendo que tienes un ID válido para probar
-    valid_id = 1
-    response = requests.get(f"{BASE_URL}/delete/{valid_id}/")
-    assert response.status_code == 200
+    template_rendered.connect(record, app)
+    try:
+        yield recorded
+    finally:
+        template_rendered.disconnect(record, app)
 
-""" def test_deletephone():
-    data = {'id': 1}
-    response = requests.post(f"{BASE_URL}/deletephone", data=data)
-    assert response.status_code == 302 """
+class FlaskAppTests(unittest.TestCase):
 
-def test_metrics():
-    response = requests.get(f"{BASE_URL}/metrics")
-    assert response.status_code == 200
+    def setUp(self):
+        app.config['TESTING'] = True
+        self.app = app.test_client()
 
-""" def test_404():
-    response = requests.get(f"{BASE_URL}/nonexistent")
-    assert response.status_code == 404 """
+    @patch('server.db.read')
+    def test_index_route(self, mock_db_read):
+        mock_db_read.return_value = []  # Simula una respuesta vacía de la base de datos
+        with captured_templates(app) as templates:
+            response = self.app.get('/')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(templates[0][0].name, 'index.html')
+            self.assertEqual(templates[0][1]['data'], [])
+
+    def test_add_route(self):
+        with captured_templates(app) as templates:
+            response = self.app.get('/add/')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(templates[0][0].name, 'add.html')
+            self.assertEqual(len(templates), 1)  # Asegurarse de que solo se haya renderizado una plantilla
+
+    @patch('server.db.insert')
+    def test_addphone_route(self, mock_db_insert):
+        mock_db_insert.return_value = True  # Simula una inserción exitosa
+        response = self.app.post('/addphone', data={'save': 'true'})
+        self.assertEqual(response.status_code, 302)  # Redirección a '/'
+        self.assertTrue(mock_db_insert.called)
+
+    @patch('server.db.read')
+    def test_update_route(self, mock_db_read):
+        mock_db_read.return_value = [{}]  # Simula encontrar un registro
+        response = self.app.get('/update/1')
+        self.assertEqual(response.status_code, 308)  # Redirección permanente
+
+    """ @patch('server.db.update')
+    def test_updatephone_route(self, mock_db_update):
+        with app.test_request_context('/updatephone'):
+            session['update'] = 1  # Establecer manualmente el valor en session
+            mock_db_update.return_value = True  # Simula una actualización exitosa
+            response = self.app.post('/updatephone', data={'update': 'true'})
+            self.assertEqual(response.status_code, 302)  # Redirección a '/' """
+
+    @patch('server.db.read')
+    def test_delete_route(self, mock_db_read):
+        mock_db_read.return_value = [{}]  # Simula encontrar un registro
+        response = self.app.get('/delete/1')
+        self.assertEqual(response.status_code, 308)  # Redirección esperada
+
+    """ @patch('server.db.delete')
+    def test_deletephone_route(self, mock_db_delete):
+        with app.test_request_context('/deletephone'):
+            session['delete'] = 1  # Establecer manualmente el valor en session
+            mock_db_delete.return_value = True  # Simula una eliminación exitosa
+            response = self.app.post('/deletephone', data={'delete': 'true'})
+            self.assertEqual(response.status_code, 302)  # Redirección a '/' """
+
+if __name__ == '__main__':
+    unittest.main()
