@@ -36,7 +36,7 @@ jobs:
     - checkout
     - run:
         name: Instalar dependencias
-        command: pip install -r requirements.txt
+        command: pip install -r source_code/requirements.txt
     - run:
         name: Ejecutar pruebas
         command: pytest
