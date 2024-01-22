@@ -1,0 +1,55 @@
+version: 2.1
+
+orbs:
+  versioning: kollex/versioning@1.0.0  
+
+jobs:
+  build:
+    working_directory: ~/app1
+    machine:
+      image: ubuntu-2204:2022.04.2
+    steps:
+    - attach_workspace:
+        at: .
+    - checkout # check out the code in the project directory    
+    - run:
+        name: Visualizacion de los archivos
+        command: ls -l ~/app1/
+    - versioning/define_version     
+    - versioning/print_version
+    - versioning/print_docker_tag 
+    - run: echo $DOCKER_TAG
+    - run: echo $VERSION 
+    - run: 
+        name: Publish Docker Image to Docker Hub
+        command: |
+          echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+          ##docker build -t $IMAGE_NAME:$DOCKER_TAG .
+          docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
+          docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
+
+  test:
+    working_directory: ~/app1
+    docker:
+      - image: circleci/python:3.8
+    steps:
+    - checkout
+    - run:
+        name: Instalar dependencias
+        command: pip install -r requirements.txt
+    - run:
+        name: Ejecutar pruebas
+        command: pytest
+
+workflows:
+  my-workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - /feature\/.*/
