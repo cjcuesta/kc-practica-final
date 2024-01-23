@@ -2,4 +2,3 @@ flask
 pymysql
 prometheus_client
 pylint
-pytest
