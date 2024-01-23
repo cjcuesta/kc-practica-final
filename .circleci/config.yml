@@ -32,7 +32,7 @@ jobs:
   test:
     working_directory: ~/app1
     docker:
-      - image: circleci/python:3.8.0
+      - image: circleci/python:3.8.9
     steps:
     - checkout
     - run: pip install --upgrade pip
