@@ -35,14 +35,15 @@ jobs:
       - image: cimg/python:3.8 #circleci/python:3.8.9
     steps:
     - checkout
-    - run: pip install --upgrade pip
+    #- run: pip install --upgrade pip
     - run:
         name: Instalar dependencias
         command: pip install -r source_code/requirements.txt
+    - sonarcloud/scan            
     - run:
         name: Ejecutar pruebas
         command: pytest
-    - sonarcloud/scan    
+    
 
 
 workflows:
