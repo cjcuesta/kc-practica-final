@@ -1,4 +1,7 @@
 flask
 pymysql
 prometheus_client
-pylint
+pylinflask
+pymysql
+prometheus_client
+pytes

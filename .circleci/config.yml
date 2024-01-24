@@ -4,7 +4,6 @@ orbs:
   versioning: kollex/versioning@1.0.0  
 
 jobs:
-
   build:
     working_directory: ~/app1
     machine:
@@ -29,11 +28,28 @@ jobs:
           docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
           docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
 
+  test:
+    working_directory: ~/app1
+    docker:
+      - image: cimg/python:3.8
+    steps:
+    - checkout
+    - run:
+        name: Instalar dependencias
+        command: pip install -r source_code/requirements.txt
+    - run:
+        name: Ejecutar pruebas
+        command: pytest
+
 workflows:
   my-workflow:
     jobs:
       - build
- 
-  
-           
-
+      - test:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+                - /feature\/.*/

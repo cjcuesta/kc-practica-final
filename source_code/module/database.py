@@ -11,7 +11,7 @@ class Database:
     def connect(self):
         # return pymysql.connect("phonebook-mysql", "dev", "dev", "crud_flask")
 
-        return pymysql.connect(host="phonebook-mysql", user="dev", password="dev", database="crud_flask", charset='utf8mb4')
+        return pymysql.connect(host="host", user="user", password="password", database="database", charset='utf8mb4')
 
     def read(self, id):
         con = Database.connect(self)
