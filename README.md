@@ -22,8 +22,6 @@ Dicha App es una copia modificada de la aplicación flask-counter vista en clase
 * Tener Minikube instalado
 
 ### Funcionamiento 
-* Incrementar visitas: [http://localhost:5000/](http://localhost:5000/)
-* Reiniciar contador: [http://localhost:5000/inicializa-contador](http://localhost:5000/inicializa-contador)
 * Para funcionamiento local en docker: [Docker: App + MySQL](./Docker/Docker.md)
 * Para funcionamiento en Minikube: [K8s: App + MySQL](./K8s/K8s.md)
 * Para funcionamiento con Helm Chart: [Helm: App + MySQL](./Helm/Helm.md)
