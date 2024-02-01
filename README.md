@@ -1,30 +1,29 @@
-# crud-application-using-flask-and-mysql
-A simple CRUD application using Flask and MySQL
+# Docker_K8s_CarlosHernandez
 
-#### Built With
+<a name="top"></a>
+## Contenido
 
-* Python
-* Python Libraries: flask and pymysql
-* MySQL
-* AdminLTE 2
+* [Docker: App + MySQL](./Docker/Docker.md)
+* [K8s: App + MySQL](./K8s/K8s.md)
+* [Helm: App + MySQL](./Helm/Helm.md)
 
-#### Running on Docker
+### Descripción de la solución
+![](imagenes/1.png)
 
-```
-docker-compose up -d
-```
+* Se tiene una aplicación Web hecha en Python con Flask. 
+* Se tiene una base de datos MySQL. 
+* La App realiza operaciones de inserción y consulta sobre la base de datos.
 
-After executing, you will have 2 running cointainers on your Docker host: `phonebook-app` and `phonebook-mysql`. For accessing the web application, open your browser and go to http://your-docker-host-ip-address:8181
+Dicha App es una copia modificada de la aplicación flask-counter vista en clase. 
 
-To destroy the containers, execute:
+### Requisitos
+* Tener Docker instalado
+* Tener Docker-Compose instalado
+* Tener Minikube instalado
 
-```
-docker-compose down --rmi all
-```
-
-## Donate
-
-If you want to donate to this project, please contact us:
-
-- Email: moehammadhanif@gmail.com
-- Telegram: [@hanifmu](https://t.me/hanifmu)
+### Funcionamiento 
+* Incrementar visitas: [http://localhost:5000/](http://localhost:5000/)
+* Reiniciar contador: [http://localhost:5000/inicializa-contador](http://localhost:5000/inicializa-contador)
+* Para funcionamiento local en docker: [Docker: App + MySQL](./Docker/Docker.md)
+* Para funcionamiento en Minikube: [K8s: App + MySQL](./K8s/K8s.md)
+* Para funcionamiento con Helm Chart: [Helm: App + MySQL](./Helm/Helm.md)
