@@ -38,30 +38,44 @@ Para iniciar se debe bajar la carpeta K8s donde se encuntran todos los maninifie
 
 ### Instalación de los manifiestos
 ```
-
+#Aplica el configmap
 k apply -f cm-init-mysql.yaml
 
+#Aplica el PersitenVolume
 k apply -f pv-mysql.yaml 
 
+#Servicio de Mysql
 k apply -f mysql-service.yaml
 
+#Deployment de Mysql
 k apply -f mysql-deployment.yaml
 
+#Para ver el pod de Mysql
+k get pods 
+
+#Para ingresar al pod de Mysql
 k exec -ti mysql-b74bd6b99-nvwq2 -- bash
 
+#Para loguearse con Mysql
 mysql -u dev -pdev
 
+#Para ver las bases de datos
 show databases;
 
+#Para cambiar a la base de datos creada
 use crud_flask;
 
+#Para  ver las tablas
 show tables; 
 
+#Se aplica el servicio de la App
 k apply -f flask-app-service.yaml
 
+#Se aplica el deployment de la app
 k apply -f flask-app-deployment.yaml 
 
-
+#Para ver los  servicios
+minikube service --all
 
 ```
 
