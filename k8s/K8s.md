@@ -51,9 +51,29 @@ referencia al configmap creado.
 
 ### Instalación de los manifiestos.
 
-Aplica el configmap
+Aplica el configmap de script de inicialización
 ```
 k apply -f cm-init-mysql.yaml
+```
+
+Aplica el configmap de variables de entorno de MySQL
+```
+k apply -f cm-db-mysql.yaml
+```
+
+Se codifica el password de root
+```
+echo -n 'root' | base64
+```
+
+Se codifica el password de la base de datos
+```
+echo -n 'dev' | base64
+```
+Las dos codificaciones anteriores deben colocarse en el archivo **sec-db-mysql.yaml**
+Y luego aplicar el secret de variables de entorno MYSQL_ROOT_PASSWORD y  MYSQL_PASSWORD.
+```
+k apply -f sec-db-mysql.yaml
 ```
 
 Aplica el PersitenVolume
