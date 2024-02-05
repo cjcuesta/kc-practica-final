@@ -21,12 +21,11 @@ spec:
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: root
-        - name: MYSQL_DATABASE
-          value: crud_flask
-        - name: MYSQL_USER
-          value: dev
         - name: MYSQL_PASSWORD
           value: dev
+        envFrom:
+        - configMapRef:
+            name: cm-db-mysql  
         volumeMounts:
         - name: mysql-initdb
           mountPath: /docker-entrypoint-initdb.d
