@@ -8,7 +8,6 @@ Para la práctica se utilizó **Minikube** y se ejecutaron los siguientes comand
 ```
 minikube start 
 ```
-
 ```
 minikube addons enable metrics-server
 ```
@@ -32,51 +31,93 @@ minikube addons list | grep -i enabled
 
 
 
-## Instalacion de los manifiestos. 
+## Manifiestos. 
 
-Para iniciar se debe bajar la carpeta K8s donde se encuntran todos los maninifiestos. 
+Para iniciar se debe igresar a la carpeta K8s donde se encuntran todos los maninifiestos. 
 
-### Instalación de los manifiestos
+### Creación del configmap de inicio de la base de datos.
+
+Se crea el configmap de inicio de la base de datos.
+Se usa el archivo  **crud_flask.sql**. Que se encuentra en la carpeta  **database**.
 ```
-#Aplica el configmap
+k create configmap mysql-preload-data-config --from-file=crud_flask.sql --dry-run=client -o=yaml > cm-init-mysql.yaml
+```
+
+Posteriormente se modifica el archivo **mysql-deployment.yaml** para hacer
+referencia al configmap creado. 
+
+### Persistencia de la base de datos.
+
+
+### Instalación de los manifiestos.
+
+Aplica el configmap
+```
 k apply -f cm-init-mysql.yaml
+```
 
-#Aplica el PersitenVolume
+Aplica el PersitenVolume
+```
 k apply -f pv-mysql.yaml 
+```
 
-#Servicio de Mysql
+Servicio de Mysql
+```
 k apply -f mysql-service.yaml
+```
 
-#Deployment de Mysql
+Deployment de Mysql
+```
 k apply -f mysql-deployment.yaml
+```
 
-#Para ver el pod de Mysql
+Para ver el pod de Mysql
+```
 k get pods 
+```
 
-#Para ingresar al pod de Mysql
+Para ingresar al pod de Mysql
+```
 k exec -ti mysql-b74bd6b99-nvwq2 -- bash
+```
 
-#Para loguearse con Mysql
+Para loguearse con Mysql
+```
 mysql -u dev -pdev
+```
 
-#Para ver las bases de datos
+Para ver las bases de datos
+```
 show databases;
+```
 
-#Para cambiar a la base de datos creada
+Para cambiar a la base de datos creada
+```
 use crud_flask;
+```
 
-#Para  ver las tablas
+Para  ver las tablas
+```
 show tables; 
+```
 
-#Se aplica el servicio de la App
+Para  ver los datos de la tabla
+```
+select * from phone_book;
+```
+
+Se aplica el servicio de la App
+```
 k apply -f flask-app-service.yaml
+```
 
-#Se aplica el deployment de la app
+Se aplica el deployment de la app
+```
 k apply -f flask-app-deployment.yaml 
-
-#Para ver los  servicios
+```
+Para ver los  servicios
+```
 minikube service --all
-
 ```
 
 
