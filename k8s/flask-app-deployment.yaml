@@ -19,11 +19,14 @@ spec:
         ports:
         - containerPort: 8181
         env:
-        - name: MYSQL_HOST
-          value: mysql-service.default.svc.cluster.local
-        - name: MYSQL_USER
-          value: dev
         - name: MYSQL_PASSWORD
-          value: dev
-        - name: MYSQL_DB
-          value: crud_flask
+          valueFrom:
+            secretKeyRef:
+              name: sec-db-mysql
+              key: mysql_user_password
+        envFrom:
+        - configMapRef:
+            name: cm-app-flask
+        
+
+        
