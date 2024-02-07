@@ -1,0 +1,33 @@
+replicas: 1
+image:
+  repository: jesusod/python-app
+  tag: latest
+  pullPolicy: Always
+labels:
+  app: flask-app
+service:
+  port: 8181
+  type: NodePort
+  nodePort: 30001
+configmap:
+  name: mysql-preload-data-config
+db:
+  name: mysql
+  replicas: 1
+  image:
+    repository: mysql
+    tag: "5.5"
+  port: 3306
+pv:
+  name: mysql
+  storageClass: manual
+  capacity:
+    storage: 20Gi
+  accessModes: ReadWriteOnce
+  hostpath: "/home/usuario/Descargas/Capacitaciones/DevOps/ProyectoFinal/kc-practica-final/k8s/mysql-data"
+env:
+  MYSQL_ROOT_PASSWORD: cm9vdA==
+  MYSQL_USER: ZGV2
+  MYSQL_PASSWORD: ZGV2
+  MYSQL_DB: Y3J1ZF9mbGFzaw==
+  MYSQL_DATABASE: Y3J1ZF9mbGFzaw==
