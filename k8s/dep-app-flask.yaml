@@ -26,7 +26,7 @@ spec:
               key: mysql_user_password
         envFrom:
         - configMapRef:
-            name: cm-app-flask
+            name: cfm-app-flask
         
 
         

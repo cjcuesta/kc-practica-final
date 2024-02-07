@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: dep-db-mysql
 spec:
   replicas: 1
   selector:
@@ -31,7 +31,7 @@ spec:
               key: mysql_user_password
         envFrom:
         - configMapRef:
-            name: cm-db-mysql  
+            name: cfm-db-mysql  
         volumeMounts:
         - name: mysql-initdb
           mountPath: /docker-entrypoint-initdb.d
@@ -40,8 +40,8 @@ spec:
       volumes:
       - name: mysql-initdb
         configMap:
-          name: mysql-preload-data-config
+          name: cfm-init-mysql
       - name: mysql-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: pvc-db-mysql
 

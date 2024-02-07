@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: mysql-preload-data-config
+  name: cfm-init-mysql
 data:
   crud_flask.sql: |
     -- phpMyAdmin SQL Dump

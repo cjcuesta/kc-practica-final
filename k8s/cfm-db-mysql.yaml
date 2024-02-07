@@ -4,4 +4,4 @@ data:
   MYSQL_USER: dev
 kind: ConfigMap
 metadata:
-  name: cm-db-mysql
+  name: cfm-db-mysql
