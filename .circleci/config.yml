@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   versioning: kollex/versioning@1.0.0  
+  sonarcloud: sonarsource/sonarcloud@2.0.0
 
 jobs:
   build:
@@ -28,6 +29,17 @@ jobs:
           docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
           docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
 
+  sonar:
+    working_directory: ~/app1
+    docker:
+      - image: cimg/python:3.8 
+    steps:
+    - checkout
+    - run:
+        name: Instalar dependencias
+        command: pip install -r source_code/requirements.txt
+    - sonarcloud/scan            
+
   test:
     working_directory: ~/app1
     docker:
@@ -45,7 +57,8 @@ workflows:
   my-workflow:
     jobs:
       - build
-      - test:
+      - sonar:
+          context: SonarCloud 
           requires:
             - build
           filters:
@@ -53,3 +66,9 @@ workflows:
               only:
                 - develop
                 - /feature\/.*/
+
+
+ 
+  
+           
+
