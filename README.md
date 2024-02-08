@@ -16,7 +16,7 @@ el repositorio público [Simple CRUD](https://github.com/muhammadhanif/crud-appl
 ## Funcionamiento
 ### Página de inicio
 ![](imagenes/app_pantalla_inicial.png)
-### Ingeso de Registro
+### Ingreso de Registro
 ![](imagenes/app_Add_Phone_Number.png)
 ### Registro Realizado
 ![](imagenes/app_nuevo_registro.png)
