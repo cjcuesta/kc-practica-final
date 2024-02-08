@@ -1,0 +1,11 @@
+# mysql-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-db-mysql
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+  clusterIP: None

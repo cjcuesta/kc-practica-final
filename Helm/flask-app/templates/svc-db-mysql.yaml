@@ -1,0 +1,12 @@
+# mysql-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }} 
+spec:
+  selector:
+    app: {{ .Values.db.name }}
+    {{- include "flask-app.selectorLabels" . | nindent 4 }} 
+  ports:
+    - port: {{ .Values.db.port }}
+  clusterIP: None

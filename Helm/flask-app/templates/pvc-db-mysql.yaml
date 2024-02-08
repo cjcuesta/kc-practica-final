@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+spec:
+  accessModes:
+    - {{ .Values.pv.accessModes }}
+  resources:
+    requests:
+      storage: {{ .Values.pv.capacity.storage }}

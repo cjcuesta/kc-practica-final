@@ -1,0 +1,32 @@
+# flask-app-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: jesusod/python-app:latest
+        ports:
+        - containerPort: 8181
+        env:
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sec-db-mysql
+              key: mysql_user_password
+        envFrom:
+        - configMapRef:
+            name: cfm-app-flask
+        
+
+        
