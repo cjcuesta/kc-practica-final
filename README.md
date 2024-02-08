@@ -38,7 +38,7 @@ el repositorio público [Simple CRUD](https://github.com/muhammadhanif/crud-appl
 * 9- Creación de manifiestos YAML 
 * 10-Creación de los Helm Charts
 * 11- Integración Continua con Circleci
-* 12- Despligue Continuo con Argo CD 
+* 12- Despliegue Continuo con Argo CD 
 ## Requisitos
 * Tener Docker instalado
 * Tener Docker-Compose instalado
@@ -46,7 +46,7 @@ el repositorio público [Simple CRUD](https://github.com/muhammadhanif/crud-appl
 * Tener Minikube instalado
 * Tener Helm instalado
 
-## Despligue
+## Despliegue
 * Para funcionamiento local en Docker: [Docker: App + MySQL](./Docker/Docker.md)
 * Para funcionamiento con manifiestos YAML: [K8s: App + MySQL](./k8s/K8s.md)
 * Para funcionamiento con Helm Chart: [Helm: App + MySQL](./Helm/Helm.md)
