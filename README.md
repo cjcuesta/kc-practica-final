@@ -20,6 +20,25 @@ el repositorio público [Simple CRUD](https://github.com/muhammadhanif/crud-appl
 ![](imagenes/app_Add_Phone_Number.png)
 ### Registro Realizado
 ![](imagenes/app_nuevo_registro.png)
+## Proceso
+* 1-Crear una organizacion Github
+* 2-Crear un proyecto Github
+* 3-Dar permisos sobre el invitar a las personas Github
+* 4-Crear el repositorio
+* 5-Crear ramas
+   - main
+   - develop
+   - feature/name
+* 6-  Proteger Ramas ( Opcional )  
+* 7-  Enlazar el proyecto con repositorios
+   -  Crear issues
+   -  Crear PR (Pull Request)
+   -  Resolver conflictos
+* 8- Instrumentar la Aplicación 
+* 9- Creación de manifiestos YAML 
+* 10-Creación de los Helm Charts
+* 11- Integración Continua con Circleci
+* 12- Despligue Continuo con Argo CD 
 ## Requisitos
 * Tener Docker instalado
 * Tener Docker-Compose instalado
