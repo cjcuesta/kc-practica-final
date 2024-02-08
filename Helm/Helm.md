@@ -12,9 +12,9 @@ minikube tunnel
 ```
 Para el último comando se debe digitar el password de root y este bloqueará la consola donde se ejecute. 
 
-## Instalación con los paramétros por defecto
+## Instalación con los parámetros por defecto
 
-Se puede ingresar a la capeta **flask-app** para ver los valores que se pueden modificar para la instalación. En el *values.yaml*
+Se puede ingresar a la carpeta **flask-app** para ver los valores que se pueden modificar para la instalación. En el *values.yaml*
 
 
 Desde la parte externa a la carpeta **flask-app** podemos visualizar previamente los charts en formato yaml
@@ -26,23 +26,27 @@ helm template flask-app
 #Se usa para mostrar los posibles errores
 helm template --debug flask-app
 
-#hace una instalacion de xxx
+#Hace una instalación de xxx
 helm install xxx  flask-app
 
-#Para hacer otra instalción 
+#Para hacer otra instalación 
 helm install --set service.nodePort=30002 yyy flask-app 
 
-#Hace desinstalción de xxx
+#Hace desinstalación de xxx
 helm uninstall xxx  flask-app 
 
-#Hace desinstalción de yyy
+#Hace desinstalación de yyy
 helm uninstall yyy  flask-app 
 
 #Para ver los  servicios
 minikube service --all
 
 ```
+## Evidencias del funcionamiento CLI
+![](imagenes/evidencia_dos_despliegues_cli.png)
 
+## Evidencias del funcionamiento APPs
+![](imagenes/evidencia_dos_despliegues_app.png)
 
 [Volver al principio](#top)
 [Volver a README principal](../README.md)
