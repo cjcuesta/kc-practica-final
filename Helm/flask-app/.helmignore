@@ -21,3 +21,14 @@
 .idea/
 *.tmproj
 .vscode/
+
+#cfm-init-mysql.yaml 
+#cfm-db-mysql.yaml 
+#sec-db-mysql.yaml 
+#pvc-db-mysql.yaml  
+#svc-db-mysql.yaml 
+#dep-db-mysql.yaml 
+#cfm-app-flask.yaml 
+#svc-app-flask.yaml 
+#dep-app-flask.yaml 
+

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sec-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+type: Opaque
+data:
+  mysql_root_password: {{ .Values.env.MYSQL_ROOT_PASSWORD }}
+  mysql_user_password: {{ .Values.env.MYSQL_USER_PASSWORD }}

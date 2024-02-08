@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfm-init-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+data:
+  crud_flask.sql: |
+{{ .Values.db.initdb | indent 4 }}
