@@ -5,4 +5,5 @@ data:
   MYSQL_USER: {{ .Values.env.MYSQL_USER }}
 kind: ConfigMap
 metadata:
-  name: cfm-app-{{ include "flask-app.fullname" . }}  
+  name: cfm-app-{{ include "flask-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}  
