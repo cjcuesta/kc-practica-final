@@ -10,7 +10,7 @@ labels:
 service:
   port: 8181
   type: NodePort
-  nodePort: 30001
+  nodePort: 30002
 
 configmap:
   name: mysql-preload-data-config
