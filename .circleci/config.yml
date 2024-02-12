@@ -57,10 +57,18 @@ workflows:
   my-workflow:
     jobs:
       - build
-      - sonar:
-          context: SonarCloud 
+      - test:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - develop
+                - /feature\/.*/
+      - sonar:
+          context: SonarCloud
+          requires:
+            - test
           filters:
             branches:
               only:
