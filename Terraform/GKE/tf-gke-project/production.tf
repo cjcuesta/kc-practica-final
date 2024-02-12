@@ -3,7 +3,7 @@ module "gke_cluster" {
 
   region       = var.region
   clusterName  = var.clusterName
-  diskSize     = var.diskSize
+  #diskSize     = var.diskSize
   minNode      = var.minNode
   maxNode      = var.maxNode
   machineType  = var.machineType
