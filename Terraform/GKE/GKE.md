@@ -14,11 +14,28 @@ Se realizaron las siguientes modificaciones al código para que funcionará.
 - * [Kubernetes Engine API](https://console.cloud.google.com/apis/api/container.googleapis.com/overview)
 - [Terraform](https://developer.hashicorp.com/terraform/install) instalado
 - [gcloud CLI](https://cloud.google.com/sdk/docs/install?hl=es-419) instalado
+- * Realizar el apartado de ["Inicializar gcloud CLI"](https://cloud.google.com/sdk/docs/install-sdk?hl=es-419#initializing_the)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/) instalado  
 - Crear la [cuenta de servicio](https://cloud.google.com/iam/docs/service-accounts-create?hl=es-419) con el rol de editor.
 - * Cambiarle el nombre al archivo de la cuenta de servicio a **cred.json**
 - * Colocar el archivo de credenciales **cred.json** en la carpeta **tf-gke-project** 
+
 ## Preparación
+### Configuración Proyecto con gcloud CLI    
+Se revisa en que proyecto esta gcloud
+```
+gcloud config get-value project 
+```
+Muestra todos los proyectos existentes
+```
+gcloud projects list
+```
+
+Se cambia al IDproyecto deseado
+```
+gcloud config set project <ID-PROYECTO>
+```
+### Parametrización
 - Agregar los archivos al .gitignore
   ```
   #Archivo generado por la cuenta de servicio
@@ -41,9 +58,9 @@ Se realizaron las siguientes modificaciones al código para que funcionará.
     maxNode=3
     machineType="e2-medium"
     ```
-  
+
 ## Creación del Cluster
-Se ingresa a la carpeta **tf-gke-project** y se ejecutan las siguientes instruciones
+Se ingresa a la carpeta **tf-gke-project** y se ejecutan las siguientes instrucciones
 - Para instalar dependencias e inicializar el proyecto. 
   ```
   terraform init
@@ -69,9 +86,10 @@ Evidencia del cluster creado en terraform
 Evidencia del cluster funcionando en la Consola de Google  
 
 ## Interacción con el Cluster
-Para usar el kubectl
+Una vez Configurado Proyecto con gcloud CLI y creado el Cluster. 
+Se añade el contexto a kubectl
 ```
-gcloud container clusters get-credentials tf-cluster --region europe-west3
+gcloud container clusters get-credentials tf-gke-DevOps4All --region europe-west3
 ```
 
 Para ver información del cluster
@@ -80,9 +98,28 @@ kubectl cluster-info
 ```
 
 Ejecución con los manifiestos YAML en la carpeta k8s con LoadBalancer
+
+
+```
+k apply -f cfm-init-mysql.yaml && \
+k apply -f cfm-db-mysql.yaml && \
+k apply -f sec-db-mysql.yaml && \
+k apply -f pvc-db-mysql.yaml  && \
+k apply -f svc-db-mysql.yaml && \
+k apply -f dep-db-mysql.yaml && \
+k apply -f cfm-app-flask.yaml && \
+k apply -f svc-load-app-flask.yaml && \
+k apply -f dep-app-flask.yaml 
+```
+
+Para ver la IP-EXTERNA del servicio del la APP
 ```
 k get svc -w 
 ```
+
+# (PENDIENTE) FALTA HACER EL CHART DEL LOADBALANCER
+
+
 Ejecución con Helm Charts en la carpeta Helm con LoadBalancer
 ```
 k get svc -w 
@@ -95,13 +132,6 @@ terrafom destroy -auto-approve
 
 Evidencias de la destrucción del cluster
 
-
-![](imagenes/MinikubeEnabled.png)
-[Simple CRUD](https://github.com/muhammadhanif/crud-application-using-flask-and-mysql) 
-
-```
-```
-
-
-[Volver al principio](#top)
-[Volver a README principal](../README.md)
+- [Volver al principio](#top)
+- [Volver a Terraform](../Terraform.md)
+- [Volver a README principal](../../README.md)
