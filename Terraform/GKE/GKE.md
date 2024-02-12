@@ -26,6 +26,13 @@ minNode=1
 maxNode=3
 machineType="e2-medium"
 ```
+- También se comentaron las referencias a la variable *diskSize*.
+  En los archivos:
+  - tf-gke-project/production.tf
+  - tf-gke-project//variables.tf
+  - tf-gke-project/modules/gke_cluster/variables.tf
+
+  
 
 ## Requisitos
 
@@ -103,21 +110,24 @@ Se ingresa a la carpeta **tf-gke-project** y se ejecutan las siguientes instrucc
   terraform apply -auto-approve
   ```
 
-# Evidencia del cluster creado en terraform
-# Evidencia del cluster funcionando en la Consola de Google  
+  Evidencia del cluster creado con terraform
+  ![](imagenes/1-crear_cluster_cli.png)
+
+  Evidencia del cluster funcionando en la Consola de Google
+  ![](imagenes/2-crear_cluster_gcp.png)  
 
 ## Interacción con el Cluster
 Una vez Configurado Proyecto con gcloud CLI y creado el Cluster. 
 Se añade el contexto a kubectl.
 ```
-gcloud container clusters get-credentials tf-gke-DevOps4All --region europe-west3
+gcloud container clusters get-credentials tf-gke-devops4all --region europe-west3
 ```
-
+![](imagenes/3-gcloud_kubectl.png)
 Para ver información del cluster
 ```
 kubectl cluster-info 
 ```
-
+![](imagenes/4-cluster_info.png)
 Ejecución con los manifiestos YAML en la carpeta k8s con LoadBalancer
 ```
 k apply -f cfm-init-mysql.yaml && \
@@ -130,12 +140,17 @@ k apply -f cfm-app-flask.yaml && \
 k apply -f svc-load-app-flask.yaml && \
 k apply -f dep-app-flask.yaml 
 ```
+
+Salida creació de YAMLs.
+
+![](imagenes/5-k8s_yaml.png)
+
 Para ver la IP-EXTERNA del servicio del la APP
 ```
 k get svc -w 
 ```
+![](imagenes/6-ip_externa_loadbalancer.png)
 
-# Evidencia de la IP-EXTERNA
 
 # (PENDIENTE) FALTA HACER EL CHART DEL LOADBALANCER
 
@@ -159,13 +174,19 @@ Para ver la IP-EXTERNA del servicio del la APP
 ```
 k get svc -w 
 ```
-# Evidencias de la Aplicación funcionando
+### Evidencias de la Aplicación funcionando
+![](imagenes/7-app_init.png)
+![](imagenes/8-app_add.png)
+![](imagenes/9-app_record.png)
 
+
+# Evidencias de la destrucción del cluster
 ```
 terrafom destroy -auto-approve
 ```
+![](imagenes/10-destruir_cluster.png)
 
-# Evidencias de la destrucción del cluster
+
 
 - [Volver al principio](#top)
 - [Volver a Terraform](../Terraform.md)
