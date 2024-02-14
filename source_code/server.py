@@ -4,7 +4,6 @@ Created on Jan 10, 2017
 @author: hanif
 '''
 
-from curses.panel import update_panels
 from flask import Flask, flash, render_template, redirect, url_for, request, session
 from module.database import Database
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
@@ -66,7 +65,7 @@ def update(id):
 @app.route('/updatephone', methods = ['POST'])
 def updatephone():
     request_counter.inc()
-    update_panels.inc()
+    update_phone_counter.inc()
     if request.method == 'POST' and request.form['update']:
 
         if db.update(session['update'], request.form):
