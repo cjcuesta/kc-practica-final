@@ -82,8 +82,8 @@ def updatephone():
 
 @app.route('/delete/<int:id>/')
 def delete(id):
-    request_counter.inc()
-    delete.inc()
+    # request_counter.inc()
+    # delete.inc()
     data = db.read(id)
 
     if len(data) == 0:
@@ -94,8 +94,8 @@ def delete(id):
 
 @app.route('/deletephone', methods = ['POST'])
 def deletephone():
-    request_counter.inc()
-    delete_phone.inc()
+    # request_counter.inc()
+    # delete_phone.inc()
     if request.method == 'POST' and request.form['delete']:
 
         if db.delete(session['delete']):
