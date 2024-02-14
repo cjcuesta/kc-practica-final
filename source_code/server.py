@@ -64,8 +64,8 @@ def update(id):
 
 @app.route('/updatephone', methods = ['POST'])
 def updatephone():
-    request_counter.inc()
-    update_phone_counter.inc()
+    # request_counter.inc()
+    # update_phone.inc()
     if request.method == 'POST' and request.form['update']:
 
         if db.update(session['update'], request.form):
