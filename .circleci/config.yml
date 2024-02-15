@@ -28,6 +28,7 @@ jobs:
           ##docker build -t $IMAGE_NAME:$DOCKER_TAG .
           #docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
           #docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
+          docker buildx build --push --platform=linux/amd64,linux/arm64 -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
 
   sonar:
     working_directory: ~/app1
