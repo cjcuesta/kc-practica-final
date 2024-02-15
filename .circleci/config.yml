@@ -21,14 +21,15 @@ jobs:
     - versioning/print_docker_tag 
     - run: echo $DOCKER_TAG
     - run: echo $VERSION
-    - run: docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder
-    - run: docker buildx inspect --bootstrap
+    - run: 
         name: Publish Docker Image to Docker Hub
         command: |
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
           ##docker build -t $IMAGE_NAME:$DOCKER_TAG .
           #docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
           #docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
+          docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder
+          docker buildx inspect --bootstrap
           docker buildx build --push --platform=linux/amd64,linux/arm64 -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
 
   sonar:
