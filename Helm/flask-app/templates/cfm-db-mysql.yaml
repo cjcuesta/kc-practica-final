@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cfm-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+data:
+  MYSQL_DATABASE: {{ .Values.env.MYSQL_DB }}
+  MYSQL_USER: {{ .Values.env.MYSQL_USER }}
+

@@ -1,0 +1,34 @@
+# Patterns to ignore when building packages.
+# This supports shell glob matching, relative path matching, and
+# negation (prefixed with !). Only one pattern per line.
+.DS_Store
+# Common VCS dirs
+.git/
+.gitignore
+.bzr/
+.bzrignore
+.hg/
+.hgignore
+.svn/
+# Common backup files
+*.swp
+*.bak
+*.tmp
+*.orig
+*~
+# Various IDEs
+.project
+.idea/
+*.tmproj
+.vscode/
+
+#cfm-init-mysql.yaml 
+#cfm-db-mysql.yaml 
+#sec-db-mysql.yaml 
+#pvc-db-mysql.yaml  
+#svc-db-mysql.yaml 
+#dep-db-mysql.yaml 
+#cfm-app-flask.yaml 
+#svc-app-flask.yaml 
+#dep-app-flask.yaml 
+

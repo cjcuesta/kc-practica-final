@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  MYSQL_HOST: {{ .Values.env.MYSQL_HOST }}-{{ include "flask-app.fullname" . }} 
+  MYSQL_DB: {{ .Values.env.MYSQL_DB }}
+  MYSQL_USER: {{ .Values.env.MYSQL_USER }}
+kind: ConfigMap
+metadata:
+  name: cfm-app-{{ include "flask-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}  

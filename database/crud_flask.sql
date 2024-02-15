@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `crud_flask`
 --
-
+CREATE DATABASE IF NOT EXISTS crud_flask;
+USE crud_flask;
 -- --------------------------------------------------------
 
 --

@@ -1,0 +1,50 @@
+# mysql-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.db.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.db.name }}
+      {{- include "flask-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.name }}
+        {{- include "flask-app.selectorLabels" . | nindent 8 }} 
+    spec:
+      containers:
+      - name: {{ .Values.db.name }}
+        image: {{ .Values.db.image.repository }}:{{ .Values.db.image.tag }}
+        ports:
+        - containerPort: {{ .Values.db.port }}
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sec-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+              key: mysql_root_password
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sec-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+              key: mysql_user_password
+        envFrom:
+        - configMapRef:
+            name: cfm-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+        volumeMounts:
+        - name: mysql-initdb
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-initdb
+        configMap:
+          name: cfm-init-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+      - name: mysql-storage
+        persistentVolumeClaim:
+          claimName: pvc-db-{{ .Values.db.name }}-{{ include "flask-app.fullname" . }}
+

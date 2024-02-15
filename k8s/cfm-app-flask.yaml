@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  MYSQL_HOST: svc-db-mysql
+  MYSQL_DB: crud_flask
+  MYSQL_USER: dev
+kind: ConfigMap
+metadata:
+  name: cfm-app-flask
