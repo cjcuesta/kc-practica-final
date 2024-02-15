@@ -59,10 +59,7 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - build
       - test:
-          requires:
-            - build
           filters:
             branches:
               only:
@@ -79,6 +76,7 @@ workflows:
                 - main
                 - develop
                 - /feature\/.*/
+      - build
 
 
  
