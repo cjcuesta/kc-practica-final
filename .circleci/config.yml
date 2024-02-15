@@ -76,7 +76,9 @@ workflows:
                 - main
                 - develop
                 - /feature\/.*/
-      - build
+      - build:
+          requires:
+            - sonar
 
 
  
