@@ -26,8 +26,8 @@ jobs:
         command: |
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
           ##docker build -t $IMAGE_NAME:$DOCKER_TAG .
-          docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
-          docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
+          #docker build -t $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG -f Dockerfile-app .
+          #docker push $DOCKERHUB_USERNAME/phonebook-app:$DOCKER_TAG
 
   sonar:
     working_directory: ~/app1
