@@ -20,8 +20,9 @@ jobs:
     - versioning/print_version
     - versioning/print_docker_tag 
     - run: echo $DOCKER_TAG
-    - run: echo $VERSION 
-    - run: 
+    - run: echo $VERSION
+    - run: docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder
+    - run: docker buildx inspect --bootstrap
         name: Publish Docker Image to Docker Hub
         command: |
           echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
