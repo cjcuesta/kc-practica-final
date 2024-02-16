@@ -1,3 +1,4 @@
+<a name="top"></a>
 # crud-application-using-flask-and-mysql
 A simple CRUD application using Flask and MySQL
 
@@ -28,3 +29,9 @@ If you want to donate to this project, please contact us:
 
 - Email: moehammadhanif@gmail.com
 - Telegram: [@hanifmu](https://t.me/hanifmu)
+  
+## Regresar
+- [Volver al principio](#top)
+- [Volver a README principal](../README.md#despliegue)
+
+
