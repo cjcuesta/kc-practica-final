@@ -48,5 +48,5 @@ minikube service --all
 ## Evidencias del funcionamiento APPs
 ![](imagenes/evidencia_dos_despliegues_app.png)
 
-[Volver al principio](#top)
-[Volver a README principal](../README.md)
+- [Volver al principio](#top)
+- [Volver a README principal](../README.md#despliegue)
