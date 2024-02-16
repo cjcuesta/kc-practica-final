@@ -46,10 +46,12 @@ el repositorio público [Simple CRUD](https://github.com/muhammadhanif/crud-appl
 * Tener Minikube instalado
 * Tener Helm instalado
 
+<a name="despliegue"></a>
 ## Despliegue
 * Para funcionamiento local en Docker: [Docker: App + MySQL](./Docker/Docker.md)
 * Para funcionamiento con manifiestos YAML: [K8s: App + MySQL](./k8s/K8s.md)
-* Para ver el proyecto en [Circleci](https://app.circleci.com/pipelines/github/cjcuesta/kc-practica-final)
+* CI en [Circleci](https://app.circleci.com/pipelines/github/cjcuesta/kc-practica-final)
+* CD en [Argo](./Argocd/README.md)
 * Para funcionamiento con Helm Chart: [Helm: App + MySQL](./Helm/Helm.md)
 * Para funcionamiento con Terraform: [Terraform: AWS ](./terraform/README.md)
 * Para funcionamiento con Terraform: [Terraform: GKE ](./Terraform/GKE/GKE.md)
