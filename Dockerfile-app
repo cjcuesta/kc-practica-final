@@ -1,10 +1,20 @@
-FROM python:3.8-alpine
+FROM python:3.8.11-alpine3.14
 
 WORKDIR /app
 COPY source_code/ /app
 
+RUN apk --no-cache add curl build-base npm
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pylint server.py || true
 
-ENTRYPOINT ["python", "server.py"]
+EXPOSE 8181
+EXPOSE 8000
+
+ENV PYTHONUNBUFFERED 1
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=5 \
+    CMD curl -s --fail http://localhost:8181/health || exit 1
+
+ENTRYPOINT ["python3", "-u", "server.py"]

@@ -6,7 +6,7 @@ Created on Jan 10, 2017
 
 from flask import Flask, flash, render_template, redirect, url_for, request, session
 from module.database import Database
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, start_http_server, generate_latest, CONTENT_TYPE_LATEST
 from flask import Response
 
 
@@ -22,24 +22,35 @@ update_counter = Counter('update_request_total', 'Total number of update request
 update_phone_counter = Counter('update_phone_request_total', 'Total number of update_phone request received')
 delete = Counter('delete_request_total', 'Total number of delete request received')
 delete_phone_counter = Counter('delete_phone_request_total', 'Total number of delete_phone request received')
+HEALTHCHECK_REQUESTS = Counter('healthcheck_requests_total', 'Total number of requests to healthcheck')
 
 @app.route('/')
 def index():
-    request_counter.inc()
-    index_counter.inc()
+    #request_counter.inc()
+    #index_counter.inc()
     data = db.read(None)
     return render_template('index.html', data = data)
 
 @app.route('/add/')
 def add():
-    request_counter.inc()
-    add_counter.inc()
+    #request_counter.inc()
+    #add_counter.inc()
     return render_template('add.html')
+
+@app.route("/health")
+def health_check():
+    """Implement health check endpoint"""
+    # Increment counter used for register the total number of calls in the webserver
+    #REQUESTS.inc()
+    # Increment counter used for register the requests to healtcheck endpoint
+    #HEALTHCHECK_REQUESTS.inc()
+    return {"health": "ok"}
+
 
 @app.route('/addphone', methods = ['POST', 'GET'])
 def addphone():
-    request_counter.inc()
-    add_phone_counter.inc()
+    ##request_counter.inc()
+    ##add_phone_counter.inc()
     if request.method == 'POST' and request.form['save']:
         if db.insert(request.form):
             flash("A new phone number has been added")
@@ -52,8 +63,8 @@ def addphone():
 
 @app.route('/update/<int:id>/')
 def update(id):
-    request_counter.inc()
-    update_counter.inc()
+    ##request_counter.inc()
+    ##update_counter.inc()
     data = db.read(id)
 
     if len(data) == 0:
@@ -64,8 +75,8 @@ def update(id):
 
 @app.route('/updatephone', methods = ['POST'])
 def updatephone():
-    request_counter.inc()
-    update_phone.inc()
+    ##request_counter.inc()
+    ##update_phone.inc()
     if request.method == 'POST' and request.form['update']:
 
         if db.update(session['update'], request.form):
@@ -82,8 +93,8 @@ def updatephone():
 
 @app.route('/delete/<int:id>/')
 def delete(id):
-    request_counter.inc()
-    delete.inc()
+    ##request_counter.inc()
+    ##delete.inc()
     data = db.read(id)
 
     if len(data) == 0:
@@ -94,8 +105,8 @@ def delete(id):
 
 @app.route('/deletephone', methods = ['POST'])
 def deletephone():
-    request_counter.inc()
-    delete_phone.inc()
+    ##request_counter.inc()
+    ##delete_phone.inc()
     if request.method == 'POST' and request.form['delete']:
 
         if db.delete(session['delete']):
@@ -119,4 +130,6 @@ def page_not_found(error):
     return render_template('error.html')
 
 if __name__ == '__main__':
+    start_http_server(8000)
     app.run(port=8181, host="0.0.0.0")
+    

@@ -8,16 +8,23 @@ spec:
   selector:
     matchLabels:
       app: flask-app
+      app.kubernetes.io/name: flask-app
   template:
     metadata:
       labels:
         app: flask-app
+        app.kubernetes.io/name: flask-app
     spec:
       containers:
       - name: flask-app
-        image: jesusod/python-app:latest
+        image: cjcuesta/python-app:latest
         ports:
-        - containerPort: 8181
+        - name: http
+          containerPort: 8181
+          protocol: TCP
+        - name: metrics
+          containerPort: 8000
+          protocol: TCP  
         env:
         - name: MYSQL_PASSWORD
           valueFrom:
@@ -27,6 +34,15 @@ spec:
         envFrom:
         - configMapRef:
             name: cfm-app-flask
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+
         
 
         
