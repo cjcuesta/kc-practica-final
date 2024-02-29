@@ -53,5 +53,5 @@ el repositorio público [Simple CRUD](https://github.com/muhammadhanif/crud-appl
 * CI en [Circleci](https://app.circleci.com/pipelines/github/cjcuesta/kc-practica-final)
 * CD en [Argo](./Argocd/README.md)
 * Para funcionamiento con Helm Chart: [Helm: App + MySQL](./Helm/Helm.md)
-* Para funcionamiento con Terraform: [Terraform: AWS ](./terraform/README.md)
+* Para funcionamiento con Terraform: [Terraform: AWS ](./Terraform/AWS/README.md)
 * Para funcionamiento con Terraform: [Terraform: GKE ](./Terraform/GKE/GKE.md)

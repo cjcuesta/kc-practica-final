@@ -36,9 +36,9 @@ A continuación pasar los comandos
 ```
 Con los cuales toda la infraestructura sera arrancada en la región que inidica el archivo provider.td
 
-![alt text](image.png)
+![alt text](imagenes/image.png)
 
-![alt text](image-1.png)
+![alt text](imagenes/image-1.png)
 
 Correr el comando para la conexión al cluster de eks desde la linea de comandos:
 ```bash
@@ -48,24 +48,25 @@ aws eks update-kubeconfig --region region-code --name my-cluster
 aws eks update-kubeconfig --region eu-west-3 --name eks_cluster_kc
 ```
 
-![alt text](image-2.png)
+![alt text](imagenes/image-2.png)
 
 Retornar a la carpeta raiz y aplicar los archivos de kubernetes con el comando kubectl
 ```bash
 kubectl apply -f k8/
 ```
 
-![alt text](image-3.png)
+![alt text](imagenes/image-3.png)
 
 Finalmente, despues de esperar a que el la infraestructura sea creada en el cluster, correr el comando para traer información del servicio
 ```bash
 kubectl get svc -w
 ```
-![alt text](image-4.png)
+![alt text](imagenes/image-4.png)
 
 Observa el servicio load balancer con la ip externa, la cual se puede acceder desde un navegador apuntando al puerto 8181 para acceder a la aplicación desplegada
 
-![alt text](image-5.png)
+![alt text](imagenes/image-5.png)
 
 - [Volver al principio](#top)
-- [Volver a README principal](../README.md#despliegue)
+- [Volver a Terraform](../Terraform.md)
+- [Volver a README principal](../../README.md#despliegue)
